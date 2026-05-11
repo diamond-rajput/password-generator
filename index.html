@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,9 +107,63 @@
         .vault-info code { background: #1e293b; padding: 2px 6px; border-radius: 4px; color: var(--success); }
 
         .actions { display: flex; gap: 8px; }
-        .btn-small { width: auto; padding: 6px 12px; margin: 0; font-size: 12px; }
+        .btn-small { width: auto; padding: 6px 12px; margin: 0; font-size: 12px; text-decoration: none; text-align: center; }
         .btn-copy { background: #475569; color: white; }
         .btn-del { background: var(--danger); color: white; }
+
+        /* Team Section Styling */
+        .team-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .team-member:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+        }
+
+        .team-member img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+            flex-shrink: 0;
+        }
+
+        .member-info strong {
+            display: block;
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        .member-info span {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .member-info p {
+            margin: 0;
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -120,7 +173,7 @@
         <h2>SecurePass Gen</h2>
         <div class="input-group">
             <label>Target Website</label>
-            <input type="text" id="siteName" placeholder="e.g. Gmail, Instagram, Steam">
+            <input type="text" id="siteName" placeholder="e.g. Gmail, Steam, Instagram">
         </div>
         <div class="input-group">
             <label>Generated Password</label>
@@ -146,8 +199,42 @@
         <div class="search-container">
             <input type="text" id="search" class="search-bar" placeholder="Search by website name..." onkeyup="filterVault()">
         </div>
-        <div id="vaultList">
+        <div id="vaultList"></div>
+    </div>
+
+    <div class="card">
+        <h3>Project Team</h3>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="WhatsApp Image 2026-05-11 at 2.46.42 PM.jpeg" alt="Dr. Abhishek Thakur">
+                <div class="member-info">
+                    <strong>Dr. Abhishek Thakur</strong>
+                    <span>Project Guide & Professor</span>
+                    <p>Professor of Front-End Engineering | Guiding us to bring clarity and creativity.</p>
+                    <a href="https://www.linkedin.com/in/dr-abhishek-thakur-00123321" target="_blank" class="btn-small btn-copy" style="margin-top: 8px; display: inline-block;">LinkedIn</a>
+                </div>
             </div>
+
+            <div class="team-member">
+                <img src="WhatsApp Image 2026-05-11 at 2.47.03 PM.jpeg" alt="Partiyush Singh">
+                <div class="member-info">
+                    <strong>Mr. Partiyush Singh</strong>
+                    <span>Front-End Developer</span>
+                    <p>Student at Chitkara University</p>
+                    <a href="https://www.linkedin.com/in/partiyush-singh" target="_blank" class="btn-small btn-copy" style="margin-top: 8px; display: inline-block;">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <img src="WhatsApp Image 2026-05-11 at 2.47.54 PM.jpeg" alt="Prabhjot Singh">
+                <div class="member-info">
+                    <strong>Mr. Prabhjot Singh</strong>
+                    <span>Front-End Developer</span>
+                    <p>Student at Chitkara University</p>
+                    <a href="https://www.linkedin.com/in/prabhjot-singh-a2b86938a" target="_blank" class="btn-small btn-copy" style="margin-top: 8px; display: inline-block;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -174,7 +261,6 @@
         }
 
         let password = "";
-        // Cryptographically secure random values
         const array = new Uint32Array(len);
         window.crypto.getRandomValues(array);
 
@@ -204,11 +290,8 @@
         });
         
         localStorage.setItem('secureVault', JSON.stringify(vault));
-        
-        // Reset inputs
         document.getElementById('siteName').value = "";
         document.getElementById('passDisplay').value = "";
-        
         renderVault();
     }
 
@@ -221,7 +304,7 @@
             return;
         }
 
-        list.innerHTML = vault.reverse().map(item => `
+        list.innerHTML = [...vault].reverse().map(item => `
             <div class="vault-item">
                 <div class="vault-info">
                     <strong>${item.site}</strong>
@@ -259,7 +342,6 @@
         });
     }
 
-    // Initialize the vault list on load
     window.onload = renderVault;
 </script>
 
